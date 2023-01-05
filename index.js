@@ -130,8 +130,6 @@ form.addEventListener("submit", (e) => {
       }, delay);
     }, delay);
   }
-
-  console.log(valid.find(validateForm));
 });
 
 thanksBtn.addEventListener("click", () => {
