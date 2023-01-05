@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Interactive card details form</title>
+
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+ <main>
+  <h1 class="visually-hidden">Credit card details</h1>
+
+  <picture class="card__bg">
+    <source media="(min-width: 920px)" srcset="images/bg-main-desktop.png">
+    <img src="images/bg-main-mobile.png" alt="">
+  </picture>
+
+  <div class="card">
+    <div class="card__back">
+      <img src="images/bg-card-back.png" alt="" class="card__back__img">
+
+      <div class="card__back__info">
+        <span class="card__back__info__digit">000</span>
+      </div>
+    </div>
+
+    <div class="card__front">
+      <img src="images/bg-card-front.png" alt="" class="card__front__img">
+      
+      <div class="card__front__info">
+        <svg width="84" height="47" viewBox="0 0 84 47" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+          <ellipse cx="23.478" cy="23.5" rx="23.478" ry="23.5" fill="#fff"/>
+          <path d="M83.5 23.5c0 5.565-4.507 10.075-10.065 10.075-5.559 0-10.065-4.51-10.065-10.075 0-5.565 4.506-10.075 10.065-10.075 5.558 0 10.065 4.51 10.065 10.075Z" stroke="#fff"/>
+        </svg>
+        <span class="card__front__info__number">0000 0000 0000 0000</span>
+        <span class="card__front__info__name">JANE APPLESEED</span>
+        <span class="card__front__info__val">00/00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form">
+    <h2 class="visually-hidden">Enter your credit card data in the form below</h2>
+    <form id="form-info">
+      <label for="name">CARDHOLDER NAME</label>
+      <input type="text" name="name" id="name" placeholder="e.g. Jane Appleseed">
+      <span class="validation" id="name-blank">Can't be blank</span>
+      <span class="validation" id="name-letter">Wrong format, letters only</span>
+
+      <label for="card-number">CARD NUMBER</label>
+      <input type="text" name="card-number" id="card" maxlength="16" placeholder="e.g. 1234 5678 9123 0000">
+      <span class="validation" id="card-blank">Can't be blank</span>
+      <span class="validation" id="card-number">Wrong format, numbers only</span>
+
+      <div class="form__column">
+        <label for="exp-date">EXP. DATE (MM/YY)</label>
+        <input type="text" name="exp-date-month" class="form__column__exp-date" maxlength="2" id="exp-month" placeholder="MM">
+        <input type="text" name="exp-date-year" class="form__column__exp-date" maxlength="2" id="exp-year" placeholder="YY">
+        <span class="validation-date" id="date-blank">Can't be blank</span>
+        <span class="validation-date" id="date-number">Wrong format, numbers only</span>
+
+        <label for="cvc">CVC</label>
+        <input type="text" name="cvc" id="cvc" maxlength="3" placeholder="e.g. 123">
+        <span class="validation-cvc" id="cvc-blank">Can't be blank</span>
+        <span class="validation-cvc" id="cvc-number">Wrong format, numbers only</span>
+      </div>
+
+      <input type="submit" name="submit" value="Confirm" class="form__submit__btn" id="submit-btn">
+    </form>
+
+    <div class="thanks hide" id="thanks">
+      <!-- Completed state start -->
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+        <circle cx="40" cy="40" r="40" fill="url(#a)"/>
+        <path d="M28 39.92 36.08 48l16-16" stroke="#fff" stroke-width="3"/>
+        <defs>
+          <linearGradient id="a" x1="-23.014" y1="11.507" x2="0" y2="91.507" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#6348FE"/><stop offset="1" stop-color="#610595"/>
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <h2 class="thanks__title">THANK YOU!</h2>
+      <p class="thanks__info">We've added your card details</p>
+      <button class="thanks__btn" id="thanks-btn">Continue</button>
+    </div>
+  </div>
+ </main>
+  
+  <footer>
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+      Coded by <a href="https://www.frontendmentor.io/profile/luizfelipeak" target="_blank">LuizFelipeAK</a>.
+    </div>
+  </footer>
+
+  <script src="index.js" type="module"></script>
+</body>
+</html>
