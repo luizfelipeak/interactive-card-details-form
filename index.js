@@ -12,6 +12,7 @@ const cardNumber = document.getElementById("card-number");
 const expMonth = document.getElementById("exp-month");
 const expYear = document.getElementById("exp-year");
 const dateEmpty = document.getElementById("date-blank");
+const dateIncorrect = document.getElementById("date-incorrect");
 const dateNumber = document.getElementById("date-number");
 
 const cvc = document.getElementById("cvc");
@@ -21,9 +22,48 @@ const cvcNumber = document.getElementById("cvc-number");
 const submit = document.getElementById("submit-btn");
 const thanksBtn = document.getElementById("thanks-btn");
 
+const cardholderName = document.getElementById("cardholder-name");
+const cardFrontNumber = document.getElementById("card-front-number");
+const expMonthCardFront = document.getElementById("exp-month-card-front");
+const expYearCardFront = document.getElementById("exp-year-card-front");
+const cardBackCVC = document.getElementById("card-back-cvc");
+
 let valid = [];
 const delay = 350;
 
+// Key event for credit card input
+// ----- Nameholder -----
+nameholder.addEventListener("keyup", () => {
+  cardholderName.innerHTML = form["name"].value;
+});
+
+// ----- Card number -----
+card.addEventListener("keyup", (key) => {
+  maskCardNumber(key, form["card"].value);
+
+  cardFrontNumber.innerHTML = form["card"].value;
+});
+
+card.addEventListener("keydown", (key) => {
+  maskCardNumber(key, form["card"].value);
+});
+
+// ----- Exp. month -----
+expMonth.addEventListener("keyup", () => {
+  expMonthCardFront.innerHTML = form["exp-month"].value;
+});
+
+// ----- Exp. year -----
+expYear.addEventListener("keyup", () => {
+  expYearCardFront.innerHTML = form["exp-year"].value;
+});
+
+// ----- CVC -----
+cvc.addEventListener("keyup", () => {
+  cardBackCVC.innerHTML = form["cvc"].value;
+});
+
+// ----- Form submit -----
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   valid = [];
@@ -55,7 +95,12 @@ form.addEventListener("submit", (e) => {
     cardEmpty.style.display = "initial";
     valid.push("false");
   }
-  else if(validateNumber(data["card-number"]) === false) {
+  else if(data["card-number"].replaceAll(" ", "").length < 16) {
+    card.classList.add("error");
+    cardEmpty.style.display = "initial";
+    valid.push("false");
+  }
+  else if(validateCardNumber(data["card-number"].replaceAll(" ", "")) === false) {
     card.classList.add("error");
     cardNumber.style.display = "initial";
     valid.push("false");
@@ -65,13 +110,32 @@ form.addEventListener("submit", (e) => {
   expMonth.classList.remove("error");
   expYear.classList.remove("error");
   dateEmpty.style.display = "none";
+  dateIncorrect.style.display = "none";
   dateNumber.style.display = "none";
 
   if(data["exp-date-month"].length === 0) {
     expMonth.classList.add("error");
     dateEmpty.style.display = "initial";
 
-    if(data["exp-date-year"].length === 0 || validateNumber(data["exp-date-year"]) === false)
+    if(data["exp-date-year"].length === 0 || data["exp-date-year"] < 23 || validateNumber(data["exp-date-year"]) === false)
+      expYear.classList.add("error");
+
+    valid.push("false");
+  }
+  else if(data["exp-date-month"].length < 2) {
+    expMonth.classList.add("error");
+    dateEmpty.style.display = "initial";
+
+    if(data["exp-date-year"].length === 0 || data["exp-date-year"] < 23 || validateNumber(data["exp-date-year"]) === false)
+      expYear.classList.add("error");
+
+    valid.push("false");
+  }
+  else if(data["exp-date-month"] > 12) {
+    expMonth.classList.add("error");
+    dateIncorrect.style.display = "initial";
+
+    if(data["exp-date-year"].length === 0 || data["exp-date-year"] < 23 || validateNumber(data["exp-date-year"]) === false)
       expYear.classList.add("error");
 
     valid.push("false");
@@ -80,7 +144,7 @@ form.addEventListener("submit", (e) => {
     expMonth.classList.add("error");
     dateNumber.style.display = "initial";
 
-    if(data["exp-date-year"].length === 0 || validateNumber(data["exp-date-year"]) === false)
+    if(data["exp-date-year"].length === 0 || data["exp-date-year"] < 23 || validateNumber(data["exp-date-year"]) === false)
       expYear.classList.add("error");
 
     valid.push("false");
@@ -89,6 +153,16 @@ form.addEventListener("submit", (e) => {
     if(data["exp-date-year"].length === 0) {
       expYear.classList.add("error");
       dateEmpty.style.display = "initial";
+      valid.push("false");
+    }
+    else if(data["exp-date-year"].length < 2) {
+      expYear.classList.add("error");
+      dateEmpty.style.display = "initial";
+      valid.push("false");
+    }
+    else if(data["exp-date-year"] < 23) {
+      expYear.classList.add("error");
+      dateIncorrect.style.display = "initial";
       valid.push("false");
     }
     else if(validateNumber(data["exp-date-year"]) === false) {
@@ -104,6 +178,11 @@ form.addEventListener("submit", (e) => {
   cvcNumber.style.display = "none";
 
   if(data.cvc.length === 0) {
+    cvc.classList.add("error");
+    cvcEmpty.style.display = "initial";
+    valid.push("false");
+  }
+  else if(data.cvc.length < 3) {
     cvc.classList.add("error");
     cvcEmpty.style.display = "initial";
     valid.push("false");
@@ -149,8 +228,16 @@ thanksBtn.addEventListener("click", () => {
   }, delay);
 });
 
-function validateForm(item) {
-  return item === "false";
+function maskCardNumber(key, number) {
+  if(key.code != "Backspace") {
+    if(number.length === 4 || number.length === 9 || number.length === 14) {
+      form["card"].value = number.concat("", " ");
+    }
+  }
+}
+
+function validateCardNumber(data) {
+  return /^[0-9]+$/.test(data);
 }
 
 function validateNumber(data) {
@@ -159,4 +246,8 @@ function validateNumber(data) {
 
 function validateLetter(data) {
   return /^[A-Za-z ]+$/.test(data);
+}
+
+function validateForm(item) {
+  return item === "false";
 }

@@ -24,7 +24,7 @@
       <img src="images/bg-card-back.png" alt="" class="card__back__img">
 
       <div class="card__back__info">
-        <span class="card__back__info__digit">000</span>
+        <span class="card__back__info__digit" id="card-back-cvc">000</span>
       </div>
     </div>
 
@@ -36,9 +36,11 @@
           <ellipse cx="23.478" cy="23.5" rx="23.478" ry="23.5" fill="#fff"/>
           <path d="M83.5 23.5c0 5.565-4.507 10.075-10.065 10.075-5.559 0-10.065-4.51-10.065-10.075 0-5.565 4.506-10.075 10.065-10.075 5.558 0 10.065 4.51 10.065 10.075Z" stroke="#fff"/>
         </svg>
-        <span class="card__front__info__number">0000 0000 0000 0000</span>
-        <span class="card__front__info__name">JANE APPLESEED</span>
-        <span class="card__front__info__val">00/00</span>
+        <span class="card__front__info__number" id="card-front-number">0000 0000 0000 0000</span>
+        <span class="card__front__info__name" id="cardholder-name">JANE APPLESEED</span>
+        <span class="card__front__info__val" id="exp-date-card-front">
+          <span id="exp-month-card-front">00</span>/<span id="exp-year-card-front">00</span>
+        </span>
       </div>
     </div>
   </div>
@@ -47,12 +49,12 @@
     <h2 class="visually-hidden">Enter your credit card data in the form below</h2>
     <form id="form-info">
       <label for="name">CARDHOLDER NAME</label>
-      <input type="text" name="name" id="name" placeholder="e.g. Jane Appleseed">
+      <input type="text" name="name" id="name" placeholder="e.g. Jane Appleseed" maxlength="30">
       <span class="validation-name" id="name-blank">Can't be blank</span>
       <span class="validation-name" id="name-letter">Wrong format, letters only</span>
 
       <label for="card">CARD NUMBER</label>
-      <input type="text" name="card-number" id="card" maxlength="16" placeholder="e.g. 1234 5678 9123 0000">
+      <input type="text" name="card-number" id="card" maxlength="19" placeholder="e.g. 1234 5678 9123 0000">
       <span class="validation-card-number" id="card-blank">Can't be blank</span>
       <span class="validation-card-number" id="card-number">Wrong format, numbers only</span>
 
@@ -64,6 +66,7 @@
           <label for="exp-year" class="visually-hidden">EXP. DATE YEAR</label>
           <input type="text" name="exp-date-year" class="form__column__exp-date" maxlength="2" id="exp-year" placeholder="YY">
           <span class="validation-date" id="date-blank">Can't be blank</span>
+          <span class="validation-date" id="date-incorrect">Incorrect date</span>
           <span class="validation-date" id="date-number">Wrong format, numbers only</span>
         </fieldset>
 
